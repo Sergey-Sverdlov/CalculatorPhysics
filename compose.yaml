@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  frontend:
+    build:
+      context: ./client # Путь к директории фронтенда
+      dockerfile: Dockerfile # Название Dockerfile для фронтенда
+    ports:
+      - "5173:5173" # Проброс порта 80 контейнера на порт 3000 хоста
+    depends_on:
+      - backend # Зависимость от бэкенда, запускается после него
+
+  backend:
+    build:
+      context: ./server # Путь к директории бэкенда
+      dockerfile: Dockerfile # Название Dockerfile для бэкенда
+    ports:
+      - "3030:3030" # Проброс порта 5000 контейнера на порт 5000 хоста
+    environment: # Переменные окружения для бэкенда, при необходимости
+      - NODE_ENV=production
